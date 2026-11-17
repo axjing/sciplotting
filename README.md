@@ -20,37 +20,47 @@
 - **Python ≥ 3.9**（运行绘图脚本可选；Agent 调用规范无需 Python 环境）
 - 可选依赖库：`pip install matplotlib numpy pandas scipy pillow`
 
-### 1. 全局安装到所有主流 Agent
-进入技能根目录，执行以下命令即可全局安装到所有已识别的兼容 Agent：
+### 1. 从 GitHub 远程直接安装（推荐）
+无需先手动克隆代码仓库，直接在终端中执行即可全局安装到所有已识别的兼容 Agent：
 ```bash
-cd sciplotting
-npx skills add . -g --all
+npx skills add axjing/sciplotting -g --all
 ```
 
 参数说明：
+- `axjing/sciplotting`：GitHub 仓库地址（支持完整 URL `https://github.com/axjing/sciplotting`）
 - `-g`：全局安装，所有项目与对话会话均可调用
-- `--all`：自动安装到所有已安装的兼容 Agent（Claude Code, Cursor, Codex, Goose 等）
+- `--all`：自动识别并安装到所有兼容的 Agent 工具
 
-### 2. 安装到指定 Agent
+### 2. 安装到指定的 Agent
 仅将技能安装到你当前日常使用的指定编程工具：
 ```bash
-# 示例：安装到 Claude Code + Codex + Cursor
-npx skills add . -g -a claude-code codex cursor
+# 示例：仅安装到 Claude Code + Codex + Cursor
+npx skills add axjing/sciplotting -g -a claude-code codex cursor
 ```
 
 支持的主流 Agent 清单：
 Claude Code、Anthropic Codex、Cursor、Goose、VS Code、OpenCode、Letta、Gemini CLI、GitHub Copilot 等 70+ 工具。
 
 ### 3. Windows 兼容说明
-Windows 系统下若提示软链接权限限制，可添加 `--copy` 参数切换为文件复制模式：
+Windows 系统下若因权限限制无法创建符号链接（symlink），可添加 `--copy` 参数切换为文件复制模式：
 ```bash
-npx skills add . -g --all --copy
+npx skills add axjing/sciplotting -g --all --copy
 ```
 
-### 4. 验证安装与卸载
+### 4. 本地源码安装（适用于二次开发/离线使用）
+```bash
+git clone https://github.com/axjing/sciplotting.git
+cd sciplotting
+npx skills add . -g --all
+```
+
+### 5. 验证安装与卸载
 ```bash
 # 查看全局已安装技能
 npx skills list -g
+
+# 更新技能到最新版本
+npx skills update sciplotting -g
 
 # 卸载技能
 npx skills remove sciplotting -g
