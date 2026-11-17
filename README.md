@@ -68,43 +68,86 @@ npx skills remove sciplotting -g
 
 ---
 
-## 🚀 五分钟上手示例
+## 🚀 核心功能快速上手
 
-### 1. 生成一张 Nature 风格柱状图（带离散散点叠加与显著性标注）
+### 1. 多子图主图联合拼版 (Figure 1 复合大图)
+解决 Nature / Science 投稿时各小图字体失调与轴对不齐的顽疾：
+```bash
+python scripts/python/compose_figure.py \
+  --journal nature-double \
+  --output Fig1_master_composite.pdf
+```
+
+### 2. 临床生存分析曲线 (Kaplan-Meier + 风险人群表)
+带有时间对齐的 Number at Risk 表、95% 置信区间与 Log-rank 检验：
+```bash
+python scripts/python/plot_survival.py \
+  --journal nature-single \
+  --output Fig2_survival.pdf
+```
+
+### 3. Meta 分析与风险比森林图 (Forest Plot)
+严谨呈现 RCT 效应量、逆方差样本权重与底部合并效应棱形 (Diamond)：
+```bash
+python scripts/python/plot_forest.py \
+  --journal nature-single \
+  --output Fig3_forest.pdf
+```
+
+### 4. AI 标杆与计算标度律 (Scaling Laws / Pareto Frontier)
+绘制计算量 vs 测试损失的双对数标度律与帕累托前沿图：
+```bash
+python scripts/python/plot_benchmark.py \
+  --type scaling \
+  --output Fig4_scaling.pdf
+```
+
+### 5. 定量统计图 (均值柱 + SEM + 离散样本散点叠加)
 ```bash
 python scripts/python/plot_stats.py \
   --type bar \
   --journal nature-single \
   --palette nature_main_5 \
-  --output Fig1_bar.pdf
+  --output Fig5_bar.pdf
 ```
 
-### 2. 生成一张高通量差异表达火山图
+### 6. 高通量组学差异火山图 (带防重叠引线标注)
 ```bash
 python scripts/python/plot_omics.py \
   --type volcano \
   --journal nature-single \
-  --output Fig2_volcano.pdf
+  --output Fig6_volcano.pdf
 ```
 
-### 3. 生成一张纯 Python 矢量机制通路图（无 LaTeX 依赖）
+### 7. 纯 Python 矢量机制图 (零 LaTeX 依赖)
 ```bash
 python scripts/python/draw_diagram.py \
   --template pathway \
   --journal nature-double \
-  --output Fig3_pathway.pdf
+  --output Fig7_pathway.pdf
 ```
 
-### 4. 编译印刷级 TikZ 技术路线图（LaTeX 矢量）
-```bash
-pdflatex scripts/tikz/linear_workflow.tex
+### 8. R / ggplot2 顶刊主题使用 (生信与单细胞推荐)
+```r
+source("scripts/r/global_style.R")
+
+# 自动注入 Arial 7pt 无衬线轴线与 Nature 5 色板
+p <- ggplot(df, aes(x = Group, y = Value, fill = Group)) +
+  geom_bar(stat = "identity", width = 0.55) +
+  scale_fill_nature("nature_main_5") +
+  theme_nature(base_size = 7)
+
+# 自动匹配 Nature 单栏 89 mm 宽度高保真导出
+save_journal_figure(p, "Fig8_R_nature.pdf", journal = "nature-single")
 ```
 
-### 5. 校验配色方案是否符合顶刊色盲无障碍标准
+### 9. 视觉自愈质检与色盲无障碍审计
 ```bash
-python scripts/python/check_palette.py \
-  --palette nature_main_5 \
-  --format markdown
+# 像素级边缘裁剪、截断与动态对比度核查
+python scripts/python/verify_render.py Fig1_master_composite.png --journal nature-double
+
+# 色盲仿真与 Delta E 色差矩阵审计
+python scripts/python/check_palette.py --palette nature_main_5 --format markdown
 ```
 
 ---
@@ -113,30 +156,43 @@ python scripts/python/check_palette.py \
 
 ```
 sciplotting/
-├── SKILL.md                    # 【主控】Agent 执行入口：元数据、工作流、核心知识库
+├── SKILL.md                    # 【主控】Agent 执行入口：元数据、5步工作流、多模态自愈闭环
 ├── README.md                   # 【人类使用说明】安装、上手、参数速查、FAQ
 ├── assets/
 │   └── palettes.json           # 结构化色值库：分类/连续/分歧/荧光/强调色全场景
 ├── references/
 │   ├── journal_specs.md        # 顶刊投稿硬规范：尺寸/分辨率/字体/文件格式
-│   ├── figure_types.md         # 六类配图定义、适用场景与最佳实践
+│   ├── figure_types.md         # 八类配图定义、适用场景与最佳实践
 │   ├── diagram_specs.md        # 流程/机制/装置图的排版符号与布局规范
 │   ├── compliance_checklist.md # 投稿前 7 维度合规校验清单
 │   └── palette_guide.md        # 色板选型决策树 + 色盲友好灰度适配说明
-└── scripts/
-    ├── python/
-    │   ├── global_style.py     # 顶刊风格全局配置（统一字体/线宽/色板）
-    │   ├── plot_stats.py       # 定量统计图生成器（柱/箱/线/散点+误差棒+显著性）
-    │   ├── plot_omics.py       # 组学图生成器（热图/火山图/PCA/富集气泡图）
-    │   ├── draw_diagram.py     # 矢量示意图生成器（流程/通路，无 LaTeX 依赖）
-    │   └── check_palette.py    # 配色合规校验（色盲模拟/灰度对比度/感知均匀性）
-    ├── tikz/
-    │   ├── linear_workflow.tex     # 线性技术路线图模板
-    │   ├── parallel_workflow.tex   # 并行多模块实验流程图模板
-    │   ├── signaling_pathway.tex   # 信号通路/分子机制图模板
-    │   └── apparatus_schematic.tex # 实验装置/结构示意图模板
-    └── mermaid/
-        └── diagram_templates.md    # 轻量级流程图模板（草稿/补充图用）
+├── scripts/
+│   ├── python/
+│   │   ├── global_style.py     # 顶刊风格全局配置（统一字体/线宽/色板/毫米转换）
+│   │   ├── compose_figure.py   # 【多子图拼版】主图联合编排器 (GridSpec, a-d 标号)
+│   │   ├── plot_stats.py       # 定量统计图生成器（柱/箱/线/散点+误差棒+显著性）
+│   │   ├── plot_survival.py    # 【临床图】Kaplan-Meier 生存分析曲线与风险人群表
+│   │   ├── plot_forest.py      # 【临床图】Meta 分析与风险比 (HR/RR) 森林图
+│   │   ├── plot_benchmark.py   # 【AI/前沿】帕累托最优、标度律与多维雷达图
+│   │   ├── plot_omics.py       # 组学图生成器（热图/火山图/PCA/富集气泡图）
+│   │   ├── draw_diagram.py     # 矢量示意图生成器（流程/通路/微流控芯片）
+│   │   ├── check_palette.py    # 配色合规校验（色盲模拟/灰度对比度/感知均匀性）
+│   │   └── verify_render.py    # 【视觉质检】像素级边缘截断与自愈反馈诊断器
+│   ├── r/
+│   │   ├── global_style.R      # R / ggplot2 顶刊主题与色板注入引擎
+│   │   └── demo_plot.R         # R 语言标准绘图与导出脚本示例
+│   ├── tikz/
+│   │   ├── linear_workflow.tex     # 线性技术路线图模板 (已过 pdflatex 编译)
+│   │   ├── parallel_workflow.tex   # 并行多模块实验流程图模板 (已过 pdflatex 编译)
+│   │   ├── signaling_pathway.tex   # 信号通路/分子机制图模板 (已过 pdflatex 编译)
+│   │   └── apparatus_schematic.tex # 实验装置/结构示意图模板 (已过 pdflatex 编译)
+│   └── mermaid/
+│       └── diagram_templates.md    # 轻量级流程图模板（生信/CONSORT/机制回路）
+├── tests/
+│   └── test_sciplotting.py     # 全场景自动化回归测试套件 (12 组用例全部通过)
+└── .github/
+    └── workflows/
+        └── ci.yml              # GitHub Actions 跨平台 (Ubuntu/Windows) CI 流水线
 ```
 
 ---

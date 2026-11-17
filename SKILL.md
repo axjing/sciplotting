@@ -1,8 +1,8 @@
 ---
 name: sciplotting
 title: 顶刊科研绘图全场景助手
-description: 覆盖定量统计、组学分析、实验成像、机制模式、技术流程、结构装置六类科研配图，提供符合Nature/Science/Cell顶刊标准的配色推荐、排版规范、代码生成与合规校验，全程满足色盲友好与印刷适配要求。
-tags: ["科研绘图", "顶刊配色", "学术可视化", "Nature规范", "投稿配图", "科研示意图"]
+description: 覆盖定量统计、组学分析、实验成像、机制模式、技术流程、结构装置六类科研配图，提供符合Nature/Science/Cell顶刊标准的配色推荐、排版规范、多子图拼版编排、代码生成(Python/R/TikZ)与多模态合规自愈校验，全程满足色盲友好与印刷适配要求。
+tags: ["科研绘图", "顶刊配色", "学术可视化", "Nature规范", "投稿配图", "科研示意图", "多子图拼版", "生存分析", "森林图", "ggplot2"]
 triggers:
   - "科研绘图配色"
   - "顶刊配图规范"
@@ -16,28 +16,40 @@ triggers:
   - "科研图合规检查"
   - "TikZ 科研图"
   - "Python 科研绘图"
+  - "多子图拼版"
+  - "生存分析曲线"
+  - "Kaplan-Meier"
+  - "森林图"
+  - "Forest Plot"
+  - "Scaling Law 绘图"
+  - "R 语言科研绘图"
+  - "ggplot2 顶刊主题"
 ---
 
 ## 1. 技能目标
 为 Coding Agent 注入全场景顶刊科研配图的流程化知识体系与可执行工具链，确保输出的图表代码与示意图严格匹配 Nature, Science, Cell, PNAS, Lancet, NEJM 等国际顶刊作者指南（Author Guidelines）。
-全面规避配色违规、分辨率不达标、字号过小、截断坐标轴、色彩空间错位及色盲无障碍缺陷等常见技术拒稿风险，实现「需求识别 → 类型匹配 → 方案输出 → 合规自检」的自动化闭环。
+全面规避配色违规、分辨率不达标、字号过小、截断坐标轴、标签裁剪碰撞、色彩空间错位及色盲无障碍缺陷等常见技术拒稿风险，实现「需求识别 → 类型匹配 → 拼版编排 → 方案输出 → 视觉自检自愈」的自动化闭环。
 
 ---
 
 ## 2. 核心能力范围
 1. **全场景配色推荐**：覆盖 6 大类科研配图的专属色板（基于 `assets/palettes.json`），提供十六进制色值、适用场景与顶级期刊文献依据。
 2. **分类型排版规范**：针对单栏（85-89 mm）、1.5 栏（120-136 mm）、双栏（174-180 mm）提供精确的画布尺寸、字体层级、线条粗细与边框设定。
-3. **多工具代码生成**：
-   - **Python**：基于 `matplotlib` 纯原生渲染，输出带误差棒与显著性星号的统计图表、高通量聚类热图、火山图、PCA 降维图与矢量示意图；
-   - **TikZ / LaTeX**：输出印刷级、可无限缩放的矢量路线图、信号转导通路图与微流控装置原理图；
+3. **多子图联合拼版编排 (`compose_figure.py`)**：一键生成由多个独立子图（Figure 1a-f）构成的复合主图，统一字体缩放比例，像素级对齐坐标轴脊线，注入期刊标号。
+4. **多语言与工具代码生成**：
+   - **Python**：基于纯原生渲染，输出带误差棒与抖动点的统计图、聚类热图、火山图、PCA、KM 生存曲线、Meta 森林图、标度律曲线与纯矢量示意图；
+   - **R / ggplot2**：提供原生 `theme_nature()` 与色彩标度 `scale_color_nature()`，无缝衔接生物信息学分析管线；
+   - **TikZ / LaTeX**：输出印刷级、可无限缩放的矢量路线图、信号通路图与微流控芯片构造图；
    - **Mermaid**：输出适用于 GitHub/草稿/Supplementary 的轻量级流程图与 CONSORT 入组图。
-4. **全维度合规校验**：自动化仿真红色盲 (Protanopia)、绿色盲 (Deuteranopia)、蓝黄色盲 (Tritanopia)，审计 CIE 相对明度与灰度打印兼容性，扫描红绿对立与 Jet 彩虹色板陷阱。
-5. **跨图一致性管控**：保障同一篇学术论文中所有主图与补充图的分组颜色、标识符号与线型体系高度绑定、完全一致。
+5. **多模态视觉自愈与全维度合规校验**：
+   - 计算机视觉边缘裁剪扫描 (`verify_render.py`)：检测轴标签溢出、画布空白与对比度缺陷；
+   - 色彩无障碍仿真 (`check_palette.py`)：仿真红色盲、绿色盲、蓝黄色盲，计算 CIE 相对明度与色差矩阵。
+6. **跨图一致性管控**：保障同一篇学术论文中所有主图与补充图的分组颜色、标识符号与线型体系高度绑定、完全一致。
 
 ---
 
 ## 3. 标准执行工作流
-Agent 加载本技能后，必须严格遵循以下四步标准作业程序响应用户：
+Agent 加载本技能后，必须严格遵循以下五步标准作业程序响应用户：
 
 ```
 用户提出绘图/配色需求
@@ -46,51 +58,61 @@ Agent 加载本技能后，必须严格遵循以下四步标准作业程序响�
 [步骤 1: 配图类型识别] ── 匹配到 6 大核心品类之一
          │
          ▼
-[步骤 2: 工具与资源匹配] ─ 读取 assets/ 与 references/，调用 scripts/
+[步骤 2: 工具与资源匹配] ─ 读取 assets/ 与 references/，选择最优脚本 (Python/R/TikZ)
          │
          ▼
-[步骤 3: 标准化方案输出] ─ 输出色板、排版尺寸、可运行代码、说明
+[步骤 3: 拼版与排版设计] ─ 确定单/双栏尺寸，规划单图或多子图大图板 (compose_figure)
          │
          ▼
-[步骤 4: 强制合规自检] ── 运行 check_palette.py 验证色盲友好与灰度
+[步骤 4: 标准化方案输出] ─ 输出色板、排版尺寸、可运行代码、说明
+         │
+         ▼
+[步骤 5: 视觉质检与自愈] ─ 执行 verify_render.py 与 check_palette.py 自愈修复
 ```
 
 ### 步骤 1：配图类型识别
 将用户的科研数据与绘图意图准确归类至 6 大核心品类：
-| 配图大类 | 核心数据特征 | 典型子类型 | 对应参考文档 |
+| 配图大类 | 核心数据特征 | 典型子类型 | 对应参考文档 / 脚本 |
 | :--- | :--- | :--- | :--- |
-| **1. 定量数据统计图** | 离散分组定量对比、统计显著性 | 柱状图+散点、箱线图、小提琴图、折线动力学、散点回归、生存曲线 | `references/figure_types.md` 第 1 节 |
-| **2. 高通量组学分析图** | 高维连续矩阵、差异表达、降维聚类 | 表达热图、火山图、PCA/t-SNE/UMAP、GO/KEGG 富集气泡图 | `references/figure_types.md` 第 2 节 |
+| **1. 定量数据统计图** | 离散分组定量对比、统计显著性 | 柱状图+散点、箱线图、小提琴图、折线动力学、散点回归、生存曲线 | `plot_stats.py`, `plot_survival.py`, `plot_forest.py` |
+| **2. 高通量组学分析图** | 高维连续矩阵、差异表达、降维聚类 | 表达热图、火山图、PCA/t-SNE/UMAP、GO/KEGG 富集气泡图 | `plot_omics.py` |
 | **3. 实验成像与表征图** | 仪器显微成像、条带谱图、多通道 Merge | 免疫荧光共聚焦、电镜 SEM/TEM、Western Blot 凝胶、XRD/NMR 谱图 | `references/figure_types.md` 第 3 节 |
-| **4. 机制原理与模式图** | 生物逻辑阐释、靶点作用、结论凝练 | 信号通路图、分子作用机制、概念模型图、Graphical Abstract | `references/figure_types.md` 第 4 节 & `diagram_specs.md` |
-| **5. 技术流程与方案图** | 步骤串联、分析流程、队列筛选 | 实验路线图、生信分析管线、CONSORT 临床筛选流、算法流程图 | `references/figure_types.md` 第 5 节 |
-| **6. 结构与装置示意图** | 空间构型、工程器械、微流控构造 | 分子空间构型、材料层叠图、流动反应器、微流控芯片、活体注射定位 | `references/figure_types.md` 第 6 节 |
+| **4. 机制原理与模式图** | 生物逻辑阐释、靶点作用、结论凝练 | 信号通路图、分子作用机制、概念模型图、Graphical Abstract | `draw_diagram.py`, `scripts/tikz/` |
+| **5. 技术流程与方案图** | 步骤串联、分析流程、队列筛选 | 实验路线图、生信分析管线、CONSORT 临床筛选流、算法流程图 | `scripts/tikz/`, `scripts/mermaid/` |
+| **6. 结构与装置示意图** | 空间构型、工程器械、微流控构造 | 分子空间构型、材料层叠图、流动反应器、微流控芯片、活体注射定位 | `apparatus_schematic.tex`, `draw_diagram.py` |
+| **★ 多子图主图拼版** | 跨图型整版联合编排 | 组合大图 (Figure 1a-f: 机制 + 统计 + 组学 + 标尺) | `compose_figure.py` |
 
 ### 步骤 2：工具与资源自动匹配
-根据用户需求场景自动选择资源与可执行脚本：
 - **查阅期刊尺寸与格式**：读取 `references/journal_specs.md`
 - **获取标准色值**：读取 `assets/palettes.json` 中的对应色板
-- **生成统计配图**：调用 `scripts/python/plot_stats.py`
+- **生成常规统计配图**：调用 `scripts/python/plot_stats.py`
+- **生成临床生存分析 (KM)**：调用 `scripts/python/plot_survival.py`
+- **生成 Meta 分析森林图**：调用 `scripts/python/plot_forest.py`
+- **生成 AI/计算标杆与标度律**：调用 `scripts/python/plot_benchmark.py`
 - **生成组学配图**：调用 `scripts/python/plot_omics.py`
-- **生成无 LaTeX 依赖的矢量示意图**：调用 `scripts/python/draw_diagram.py`
+- **生成多子图复合大版面**：调用 `scripts/python/compose_figure.py`
+- **R / ggplot2 绘图**：调用 `scripts/r/global_style.R`
+- **生成纯 Python 矢量示意图**：调用 `scripts/python/draw_diagram.py`
 - **生成印刷级 TikZ 矢量示意图**：调用 `scripts/tikz/` 模板
 - **生成轻量级流程图**：调用 `scripts/mermaid/diagram_templates.md`
-- **进行配色合规审计**：调用 `scripts/python/check_palette.py`
+- **执行视觉质检自愈**：调用 `scripts/python/verify_render.py`
+- **执行配色合规审计**：调用 `scripts/python/check_palette.py`
 
-### 步骤 3：标准化输出
+### 步骤 3：标准化输出要求
 输出内容必须结构完整，包含：
 1. **对应场景的顶刊配色方案**：注明 Hex 色值、色相名称与期刊依据；
 2. **目标期刊排版参数**：注明单栏/双栏宽度（mm / in）、字号阶梯（pt）与误差棒定义；
 3. **完整且可独立运行的代码**：包含数据准备、样式加载、矢量导出与图形关闭；
 4. **色盲友好与灰度适配等级说明**。
 
-### 步骤 4：强制合规自检
-输出代码或方案前，必须对照 `references/compliance_checklist.md` 进行检查：
+### 步骤 4：强制合规自检与视觉自愈
+输出代码或方案前，必须对照 `references/compliance_checklist.md` 进行检查，并运行视觉质检工具：
 - 严禁出现纯红-纯绿直接对比；
 - 连续渐变严禁使用 `jet` 或 `rainbow`；
 - 分类颜色数量控制在合理范围（主图推荐 $\le 5$ 组，最大 $\le 8$ 组）；
 - 小样本（$n < 20$）柱状图必须叠加离散生物学重复散点；
-- 全图文字在印刷缩放后不得小于 5 pt。
+- 全图文字在印刷缩放后不得小于 5 pt；
+- 若 `verify_render.py` 报告边缘裁剪风险，主动在代码中增加 `pad_inches` 或调整刻度角度。
 
 ---
 
@@ -108,54 +130,32 @@ Agent 加载本技能后，必须严格遵循以下四步标准作业程序响�
 
 ---
 
-## 5. 分品类绘图规范速查
-### 5.1 定量数据统计图
-- **首选色板**：3-5 组首选 `nature_main_5`；6-8 组首选 `okabe_ito_8`。
-- **排版规范**：去除 Top/Right 边框，Spine 线宽 0.8 pt，Tick 向外，字体 Arial/Helvetica。
-- **核心要求**：对照组固定中性冷灰/冷蓝；处理组暖色；误差棒完整并写明含义；禁止截断纵坐标夸大差异。
-
-### 5.2 高通量组学分析图
-- **连续数值**：首选 `viridis`，高对比选用 `plasma`，极端无障碍选用 `cividis`。
-- **正负差异**：首选 `RdBu`（红上调/蓝下调）或色盲友好 `PRGn`（紫上调/绿下调）。
-- **核心要求**：Colorbar 明确标示 Z-score 截断范围与物理单位；PCA 坐标轴标注方差贡献率。
-
-### 5.3 实验成像与表征图
-- **荧光成像**：双通道绿 + 品红，三通道青 + 品红 + 黄；必须配套单通道灰度图。
-- **WB/凝胶**：保留真实背景（上下 3-5 倍胶高）；拼接胶必须画虚线分隔；标明 kDa 分子量。
-- **核心要求**：右下角必附实体 Scale bar，并在图注中指明标尺物理长度。
-
-### 5.4 机制原理与模式图
-- **配色原则**：1 种核心强调色（#E15759）+ 1 种辅助色（#4E79A7）+ 多级灰阶背景。
-- **符号语义**：实心三角箭头表示直接激活；平头 T 字杠表示抑制；虚线表示间接作用；弯箭表示跨膜转位。
-- **核心要求**：层级清晰（背景边界 → 常规元件 → 高亮靶点），文字简明，无多余装饰。
-
-### 5.5 技术流程与方案图
-- **流向标准**：一律由左向右或自上而下；禁止交叉连线。
-- **模块化对齐**：统一圆角矩形节点，内部文本居中；阶段上方附带时间轴或 Phase 色带。
-
-### 5.6 结构与装置示意图
-- **几何精度**：严格按工程比例或注明“Not to scale”；流体管路内部标出微小单向流向箭头。
-- **材质区分**：液体用半透明（alpha=0.6），基底用哑光冷灰，金属件用低反光深灰。
-
----
-
-## 6. 核心工具与脚本调用参考
-- **全局绘图样式注入**：
-  ```python
-  from scripts.python.global_style import apply_journal_style, get_figsize, get_palette, save_figure
-  apply_journal_style(journal="nature")
-  ```
-- **生成定量统计图**：
+## 5. 核心工具与脚本调用参考
+- **主图联合拼版**：
   ```bash
-  python scripts/python/plot_stats.py --type bar --journal nature-single --palette nature_main_5 --output Fig1.pdf
+  python scripts/python/compose_figure.py --journal nature-double --output Fig1_composite.pdf
   ```
-- **生成组学配图**：
+- **生成临床生存分析曲线 (带 Number at Risk 表)**：
   ```bash
-  python scripts/python/plot_omics.py --type volcano --journal nature-single --output Fig2_volcano.pdf
+  python scripts/python/plot_survival.py --journal nature-single --output Fig_survival.pdf
   ```
-- **生成纯 Python 矢量示意图**：
+- **生成临床 Meta 分析森林图**：
   ```bash
-  python scripts/python/draw_diagram.py --template pathway --output Fig3_mechanism.pdf
+  python scripts/python/plot_forest.py --journal nature-single --output Fig_forest.pdf
+  ```
+- **生成计算标度律与 AI 标杆图**：
+  ```bash
+  python scripts/python/plot_benchmark.py --type pareto --output Fig_pareto.pdf
+  ```
+- **R / ggplot2 主题使用**：
+  ```r
+  source("scripts/r/global_style.R")
+  p <- ggplot(df, aes(x, y, fill=group)) + geom_bar(...) + theme_nature() + scale_fill_nature()
+  save_journal_figure(p, "Fig_R.pdf", journal="nature-single")
+  ```
+- **执行视觉质检与自愈诊断**：
+  ```bash
+  python scripts/python/verify_render.py Fig1_composite.png --journal nature-double
   ```
 - **执行配色合规性审计**：
   ```bash
