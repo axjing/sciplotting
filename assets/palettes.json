@@ -1,0 +1,175 @@
+{
+  "categorical": {
+    "nature_main_5": {
+      "name": "Nature正刊低饱和5色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F"],
+      "scenarios": ["主图柱状图", "箱线图", "3-5组实验对比", "临床亚组"]
+    },
+    "okabe_ito_8": {
+      "name": "Okabe-Ito 8色板 (Nature Methods 推荐)",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000"],
+      "scenarios": ["多组对比", "多时间点曲线", "补充图大分组", "色盲无障碍首选"]
+    },
+    "science_classic_6": {
+      "name": "Science经典典雅6色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#2B5C8F", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02"],
+      "scenarios": ["综合理化分析", "多变量散点图", "聚类分组"]
+    },
+    "cell_press_6": {
+      "name": "Cell Press活力6色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B"],
+      "scenarios": ["生物分子亚群", "细胞谱系", "信号通路分组"]
+    },
+    "nejm_classic_5": {
+      "name": "NEJM医学经典5色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#BC3C29", "#0072B5", "#E18727", "#20854E", "#6F99AD"],
+      "scenarios": ["临床试验RCT", "生存分析KM曲线", "流行病学队列"]
+    },
+    "lancet_subgroup_6": {
+      "name": "The Lancet沉稳6色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#00468B", "#ED0000", "#42B540", "#0099B4", "#925E9F", "#FDAF91"],
+      "scenarios": ["Meta分析森林图", "危险度分层", "多中心随访"]
+    }
+  },
+  "sequential": {
+    "viridis": {
+      "name": "Viridis感知均匀色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#440154", "#482878", "#3E4A89", "#31688E", "#26838E", "#1F9D89", "#35B779", "#6DCD59", "#B4DE2C", "#FDE725"],
+      "scenarios": ["表达热图", "连续密度图", "空间转录组", "电位分布"]
+    },
+    "plasma": {
+      "name": "Plasma高对比度暖色阶",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#0D0887", "#46039F", "#7201A8", "#9C179E", "#BD3786", "#D8576B", "#ED7953", "#FB9F3A", "#FDC926", "#F0F921"],
+      "scenarios": ["弱信号高亮热图", "微观能量分布", "荧光强度梯度"]
+    },
+    "cividis": {
+      "name": "Cividis全色盲优化色阶",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#00204D", "#00326D", "#1A467F", "#3B5A89", "#5B6F8E", "#7C8592", "#9E9D95", "#C2B694", "#E7D28F", "#FFEA7D"],
+      "scenarios": ["红绿色盲与蓝黄色盲完全兼容", "极端无障碍要求热图"]
+    },
+    "inferno": {
+      "name": "Inferno黑体辐射暖色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#000004", "#1B0C41", "#4A0C6B", "#781C6D", "#A52C60", "#CF4446", "#ED6925", "#FB9B06", "#F7D13C", "#FCFFA4"],
+      "scenarios": ["热像图", "天体物理", "材料应力分布"]
+    },
+    "magma": {
+      "name": "Magma岩浆冷紫暖白",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#000004", "#180F3E", "#450F59", "#721F81", "#9F2F7F", "#CD4071", "#F1605D", "#FD9668", "#FECDAA", "#FCFDBF"],
+      "scenarios": ["暗色背景图表", "激光共聚焦多通道背景"]
+    },
+    "blues_6": {
+      "name": "单色调学术蓝6阶",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#EFF3FF", "#C6DBEF", "#9ECAE1", "#6BAED6", "#3182BD", "#08519C"],
+      "scenarios": ["单分子富集", "时间累积效应", "浓度梯级响应"]
+    },
+    "oranges_6": {
+      "name": "单色调学术橙6阶",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#FEEDDE", "#FDD0A2", "#FDAE6B", "#FD8D3C", "#E6550D", "#A63603"],
+      "scenarios": ["炎症因子滴度", "药物毒性梯度", "升温实验"]
+    }
+  },
+  "diverging": {
+    "RdBu": {
+      "name": "Red-Blue经典双极分歧色板",
+      "colorblind_safe": false,
+      "print_safe": true,
+      "colors": ["#67001F", "#B2182B", "#D6604D", "#F4A582", "#FDDBC7", "#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3", "#2166AC", "#053061"],
+      "scenarios": ["基因差异表达 (上调红/下调蓝)", "相关性矩阵 (-1 到 +1)", "Z-score 标准化表达量"]
+    },
+    "PRGn": {
+      "name": "Purple-Green色盲友好双极色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#40004B", "#762A83", "#9970AB", "#C2A5CF", "#E7D4E8", "#FFFFFF", "#D9F0D3", "#A6DBA0", "#5AAE61", "#1B7837", "#00441B"],
+      "scenarios": ["红绿色盲首选差异表达", "正负电荷分布", "代谢物上调/下调"]
+    },
+    "PiYG": {
+      "name": "Pink-YellowGreen双极色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#8E0152", "#C51B7D", "#DE77AE", "#F1B6DA", "#FDE0EF", "#FFFFFF", "#E6F5D0", "#B8E186", "#7FBC41", "#4D9221", "#276419"],
+      "scenarios": ["生态学增益与衰退", "表型转移倾向性分析"]
+    },
+    "PuOr": {
+      "name": "Purple-Orange双极色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#7F3B08", "#B35806", "#E08214", "#FDB863", "#FEE0B6", "#FFFFFF", "#D8DAEB", "#B2ABD2", "#8073AC", "#542788", "#2D004B"],
+      "scenarios": ["地学/物理正负异常", "两组临床疗效对比"]
+    },
+    "coolwarm": {
+      "name": "Coolwarm平滑双极色板",
+      "colorblind_safe": true,
+      "print_safe": true,
+      "colors": ["#3B4CC0", "#688AEC", "#99B9F9", "#C9DCFB", "#EDF1F7", "#F7DDD6", "#F2A895", "#DE6753", "#B40426"],
+      "scenarios": ["温度差值", "主成分载荷系数", "互作强度"]
+    }
+  },
+  "fluorescence": {
+    "dual_channel": {
+      "name": "双通道推荐 (绿 + 品红，彻底规避红绿混淆)",
+      "channels": ["Green / Alexa488", "Magenta / Alexa568"],
+      "colors": ["#00A651", "#CC0066"],
+      "scenarios": ["共定位分析", "荧光免疫双染", "GFP + mCherry 推荐替代展示"]
+    },
+    "triple_channel": {
+      "name": "三通道推荐 (青 + 品红 + 黄)",
+      "channels": ["Cyan (DAPI/核)", "Magenta (靶蛋白1)", "Yellow (靶蛋白2)"],
+      "colors": ["#00B8D4", "#CC0066", "#FFD600"],
+      "scenarios": ["三色共聚焦", "细胞核与双细胞器标记", "高分辨结构重构"]
+    },
+    "four_channel": {
+      "name": "四通道学术标准 (蓝 + 绿 + 橙红 + 红外)",
+      "channels": ["Blue (DAPI)", "Green (Alexa488)", "Orange/Red (Alexa594)", "Far-Red/False Cyan (Cy5)"],
+      "colors": ["#2A62D1", "#00A651", "#FF5500", "#A80084"],
+      "scenarios": ["多重组织免疫荧光", "四色流式分析表型", "空间蛋白组学探针"]
+    }
+  },
+  "accent": {
+    "primary": "#E15759",
+    "secondary": "#4E79A7",
+    "highlight": "#F28E2B",
+    "inhibition": "#D9534F",
+    "activation": "#337AB7",
+    "neutral": "#8C8C8C",
+    "background_light": "#F8F9FA",
+    "border_dark": "#262626",
+    "gray_scale": [
+      "#F8F9FA",
+      "#E9ECEF",
+      "#DEE2E6",
+      "#CED4DA",
+      "#ADB5BD",
+      "#6C757D",
+      "#495057",
+      "#343A40",
+      "#212529"
+    ]
+  }
+}
